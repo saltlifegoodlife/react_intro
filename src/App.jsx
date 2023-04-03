@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { HomePage, FilmsPage } from "./pages/Index";
 import "./App.css";
-import FilmsList from "./components/filmsList";
 
 function App() {
   const [list, setList] = useState(["ready", "set", "GO"]);
@@ -14,25 +15,22 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      <ul>
-        {list.map((item, index) => {
-          return <li key={index}>{item}</li>;
-        })}
-      </ul>
-      <FilmsList />
-    </div>
+    <BrowserRouter>
+      <nav>
+        <ul>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/films">Films</NavLink>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="films" element={<FilmsPage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
