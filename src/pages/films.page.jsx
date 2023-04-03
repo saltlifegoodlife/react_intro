@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { filterFilmsByDirector, getListOf } from "../helpers/film.helpers";
+import {
+  filterFilmsByDirector,
+  getListOf,
+  getFilmStats,
+} from "../helpers/film.helpers";
+import { Link } from "react-router-dom";
 function FilmsPage(props) {
   const [list, setList] = useState([]);
   const [searchDirector, setSearchDirector] = useState("");
@@ -20,6 +25,7 @@ function FilmsPage(props) {
 
   let filmsByDirector = filterFilmsByDirector(list, searchDirector);
   let directors = getListOf(list, "director");
+  let filmStats = getFilmStats(list);
 
   useEffect(() => {
     getFilms();
@@ -39,7 +45,9 @@ function FilmsPage(props) {
               setSearchDirector(e.target.value);
             }}
           >
-            <option value="">All</option>
+            <option value="" key="All">
+              All
+            </option>
             {directors.map((dir, idx) => {
               return (
                 <option key={dir + idx} value={dir}>
@@ -50,11 +58,27 @@ function FilmsPage(props) {
           </select>
         </div>
       </form>
+      <div>
+        <div>
+          <span># Of Films: </span>
+          <span>{filmStats.total}</span>
+        </div>
+        <div>
+          <span>Average Rating</span>
+          <span>{filmStats.avg_score.toFixed(2)}</span>
+        </div>
+        <div>
+          <span>Latest Film Date:</span>
+          <span>{filmStats.latest}</span>
+        </div>
+      </div>
       <ul>
         {filmsByDirector.map((e) => {
           return (
             <div>
-              <li key={e.id}>{e.title}</li>
+              <li key={e.id}>
+                <Link to={`/film/${e.id}`}>{e.title}</Link>
+              </li>
               <img src={e.image} alt="" />
             </div>
           );

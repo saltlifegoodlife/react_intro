@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
-import { HomePage, FilmsPage } from "./pages/Index";
+import { HomePage, FilmsPage, SingleFilmPage } from "./pages/Index";
 import "./App.css";
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="films" element={<FilmsPage />}></Route>
+        <Route path="film/:id" element={<SingleFilmPage />}></Route>
       </Routes>
     </BrowserRouter>
   );
